@@ -4,14 +4,14 @@
         Public DateOfEmployment As Date
     End Structure
 
-    Dim MA, Einstellungsdatum As User
+    Dim Azubi, Einstellungsdatum As User
     Dim TimeSpan As Long
 
     Private Sub Kündigungsrechnung(Zeitspanne As Long)
         If TimeSpan < 28 Then
             lblAusgabe.Text = "MA kann fristgerecht kündigen."
         Else
-            lblAusgabe.Text = "Es ist erst zum Ende des folgemonats möglich."
+            lblAusgabe.Text = "Es ist erst zum Ende des Folgemonats möglich."
         End If
     End Sub
 
@@ -20,14 +20,16 @@
     End Sub
 
     Private Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
-        MA.Name = "Meyer"
+        Azubi.Name = "Adams"
         Einstellungsdatum.DateOfEmployment = #08/14/2023#
-        If txtName.Text = MA.Name Then
+        If txtName.Text = Azubi.Name Then
             dateAnfangDesArbeitsverhältnisses.Value = Einstellungsdatum.DateOfEmployment
-            TimeSpan = DateDiff(DateInterval.Day, dateAnfangDesArbeitsverhältnisses.Value, dateKündigungsTag.Value)
+            TimeSpan = DateDiff(DateInterval.Day, Date.Now, dateKündigungsTag.Value)
             lblAusgabe.Visible = True
             If dateKündigungsTag.Value < dateAnfangDesArbeitsverhältnisses.Value Then
                 MessageBox.Show("Dies ist nicht möglich", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                lblAusgabe.Text = "Geben Sie ein gültiges Kündigungsdatum ein"
+                Exit Sub
             End If
             Kündigungsrechnung(TimeSpan)
         End If
