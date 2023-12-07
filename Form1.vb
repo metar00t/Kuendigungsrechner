@@ -5,19 +5,31 @@
     End Structure
 
     Dim MA, Einstellungsdatum As User
-    Dim Differenz_Zeit As TimeSpan
+    Dim TimeSpan As Long
+
+    Private Sub Kündigungsrechnung(Zeitspanne As Long)
+        If TimeSpan < 28 Then
+            lblAusgabe.Text = "MA kann fristgerecht kündigen."
+        Else
+            lblAusgabe.Text = "Es ist erst zum Ende des folgemonats möglich."
+        End If
+    End Sub
 
     Private Sub btnEnde_Click(sender As Object, e As EventArgs) Handles btnEnde.Click
         End
     End Sub
 
     Private Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
-        MA.Name = "Adams"
+        MA.Name = "Meyer"
         Einstellungsdatum.DateOfEmployment = #08/14/2023#
-        If txtName.Text = "Adams" Then
+        If txtName.Text = MA.Name Then
             dateAnfangDesArbeitsverhältnisses.Value = Einstellungsdatum.DateOfEmployment
-            Differenz_Zeit = dateKündigungsTag.Value - dateAnfangDesArbeitsverhältnisses.Value
-            lblAusgabe.Text = Differenz_Zeit.ToString
+            TimeSpan = DateDiff(DateInterval.Day, dateAnfangDesArbeitsverhältnisses.Value, dateKündigungsTag.Value)
+            lblAusgabe.Visible = True
+            If dateKündigungsTag.Value < dateAnfangDesArbeitsverhältnisses.Value Then
+                MessageBox.Show("Dies ist nicht möglich", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
+            Kündigungsrechnung(TimeSpan)
         End If
     End Sub
 End Class
