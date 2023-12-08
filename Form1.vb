@@ -22,6 +22,10 @@
     Private Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
         Azubi.Name = "Adams"
         Einstellungsdatum.DateOfEmployment = #08/14/2023#
+        If txtName.Text = "" Then
+            MessageBox.Show("Bitte geben sie einen Namen ein", "Error 404", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Exit Sub
+        End If
         If txtName.Text = Azubi.Name Then
             dateAnfangDesArbeitsverhältnisses.Value = Einstellungsdatum.DateOfEmployment
             TimeSpan = DateDiff(DateInterval.Day, Date.Now, dateKündigungsTag.Value)
