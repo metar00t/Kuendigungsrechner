@@ -1,10 +1,5 @@
 ﻿Public Class Form1
-    Private Structure User
-        Public Name() As String
-        Public DateOfEmployment As Date
-    End Structure
-
-    Dim Azubi, Einstellungsdatum As User
+    Private Const [Date] As Date = #08/14/2023#
     Dim TimeSpan As Long
 
     Private Sub Kündigungsrechnung(Zeitspanne As Long)
@@ -20,16 +15,19 @@
     End Sub
 
     Private Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
-        ReDim Azubi.Name(3)
-        Azubi.Name(0) = "Adams"
-        Azubi.Name(1) = "Meyer"
-        Einstellungsdatum.DateOfEmployment = #08/14/2023#
+        Dim DateofEmployment As Date
+        Dim i As Integer = 0
+        Dim Name() As String = {"Adams", "Meyer", "Beyer", "Hölz"}
+        DateofEmployment = [Date]
         If txtName.Text = "" Then
             MessageBox.Show("Bitte geben sie einen Namen ein", "Error 404", MessageBoxButtons.OK, MessageBoxIcon.Information)
             Exit Sub
         End If
-        If txtName.Text = Azubi.Name(0) Then
-            dateAnfangDesArbeitsverhältnisses.Value = Einstellungsdatum.DateOfEmployment
+        Do
+            i += 1
+        Loop Until txtName.Text = Name(i)
+        If txtName.Text = Name(i) Then
+            dateAnfangDesArbeitsverhältnisses.Value = DateofEmployment
             TimeSpan = DateDiff(DateInterval.Day, Date.Now, dateKündigungsTag.Value)
             lblAusgabe.Visible = True
             If dateKündigungsTag.Value < dateAnfangDesArbeitsverhältnisses.Value Then
