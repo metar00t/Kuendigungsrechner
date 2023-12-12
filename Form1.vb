@@ -1,42 +1,46 @@
 ﻿Public Class Form1
-    Private Const [Date] As Date = #08/14/2023#
-    Dim TimeSpan As Long
-
-    Private Sub Kündigungsrechnung(Zeitspanne As Long)
-        If TimeSpan < 28 Then
-            lblAusgabe.Text = "MA kann fristgerecht kündigen."
-        Else
-            lblAusgabe.Text = "Es ist erst zum Ende des Folgemonats möglich."
-        End If
-    End Sub
-
     Private Sub btnEnde_Click(sender As Object, e As EventArgs) Handles btnEnde.Click
         End
     End Sub
 
+    Private Function BerechneDieStartZeit(ByVal User As String, ByVal Start As Date)
+        Dim ZeitspanneBeginn, ZeitspanneKündigung As Long
+        If txtName.Text = User Then
+            ZeitspanneBeginn = DateDiff(DateInterval.Year, Start, dateKündigungsTag.Value)
+            cbProbezeit.Checked = True
+        End If
+    End Function
+
     Private Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
-        Dim DateofEmployment As Date
-        Dim i As Integer = 0
-        Dim Name() As String = {"Adams", "Meyer", "Beyer", "Hölz"}
-        DateofEmployment = [Date]
-        If txtName.Text = "" Then
-            MessageBox.Show("Bitte geben sie einen Namen ein", "Error 404", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Exit Sub
+        Dim Name() As String = {"Adams", "Meyer", "Beyer", "Gottschalk"}
+        Dim Beginn As Date = #01/01/2000#
+        Dim x As Integer = 0
+        Do Until txtName.Text = Name(x)
+            x += 1
+        Loop
+        BerechneDieStartZeit(Name(x), Beginn)
+
+    End Sub
+
+    ' Vor dem Start des Eigentlichen Programmes, wird der Name des MA's erfasst und die dazugehörigen Daten eingetragen
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Dim Meldung, Titel, [Default] As String
+        Dim MeineMeldung As Object
+        Dim Beginn As Date = #01/01/2000#
+        Meldung = "Wie lautet Ihr Name?"
+        Titel = "MA Name"
+        [Default] = ""
+
+        MeineMeldung = InputBox(Meldung, Titel, [Default])
+
+        If MeineMeldung Is "" Then
+            MessageBox.Show("Versuchen Sie es erneut", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Question)
+            End
         End If
-        Do
-            i += 1
-        Loop Until txtName.Text = Name(i)
-        If txtName.Text = Name(i) Then
-            dateAnfangDesArbeitsverhältnisses.Value = DateofEmployment
-            TimeSpan = DateDiff(DateInterval.Day, Date.Now, dateKündigungsTag.Value)
-            lblAusgabe.Visible = True
-            If dateKündigungsTag.Value < dateAnfangDesArbeitsverhältnisses.Value Then
-                MessageBox.Show("Dies ist nicht möglich", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                lblAusgabe.Text = "Geben Sie ein gültiges Kündigungsdatum ein"
-                Exit Sub
-            End If
-            Kündigungsrechnung(TimeSpan)
-        End If
+        txtName.Text = MeineMeldung
+        txtName.Enabled = False
+        dateAnfangDesArbeitsverhältnisses.Value = Beginn
+
     End Sub
 End Class
 
