@@ -1,45 +1,62 @@
-﻿Public Class Form1
+﻿' Dieser Code wurde von metar00t erstellt
+' © metar00t
+
+
+Imports System.Xml.Schema
+
+Public Class Form1
     Private Sub btnEnde_Click(sender As Object, e As EventArgs) Handles btnEnde.Click
         End
     End Sub
 
-    Private Function BerechneDieStartZeit(ByVal User As String, ByVal Start As Date)
+    Private Function BerechnungDerFristen(ByVal User As String, ByVal Start As Date)
         Dim ZeitspanneBeginn, ZeitspanneKündigung As Long
         If txtName.Text = User Then
-            ZeitspanneBeginn = DateDiff(DateInterval.Year, Start, dateKündigungsTag.Value)
-            cbProbezeit.Checked = True
+            ZeitspanneBeginn = DateDiff(DateInterval.Year, Start, Date.Now)
+        End If
+        If txtName.Text = User Then
+            ZeitspanneKündigung = DateDiff(DateInterval.Month, Start, dateKündigungsTag.Value)
         End If
     End Function
 
     Private Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
         Dim Name() As String = {"Adams", "Meyer", "Beyer", "Gottschalk"}
-        Dim Beginn As Date = #01/01/2000#
+        Dim Beginn As Date = #08/14/2023#
         Dim x As Integer = 0
-        Do Until txtName.Text = Name(x)
-            x += 1
-        Loop
-        BerechneDieStartZeit(Name(x), Beginn)
-
+        BerechnungDerFristen(Name(x), Beginn)
     End Sub
 
     ' Vor dem Start des Eigentlichen Programmes, wird der Name des MA's erfasst und die dazugehörigen Daten eingetragen
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+Restart:
         Dim Meldung, Titel, [Default] As String
         Dim MeineMeldung As Object
-        Dim Beginn As Date = #01/01/2000#
-        Meldung = "Wie lautet Ihr Name?"
-        Titel = "MA Name"
+        Dim Beginn As Date = #08/14/2023#
+        Dim Name() As String = {"Adams", "Meyer", "Beyer", "Gottschalk", "Seefeldt", "Hübscher", "Diehl", "Ullmann"}
+        Dim x As Integer
+        Meldung = "Welches MA Profil wollen sie aufrufen?"
+        Titel = "Register"
         [Default] = ""
 
         MeineMeldung = InputBox(Meldung, Titel, [Default])
+        Dim Index As String = Name.IndexOf(Name, MeineMeldung)
 
-        If MeineMeldung Is "" Then
-            MessageBox.Show("Versuchen Sie es erneut", "Fehler", MessageBoxButtons.OK, MessageBoxIcon.Question)
-            End
+        For x = 0 To Index Step 1
+            txtName.Text = MeineMeldung
+            txtName.Enabled = False
+            If MeineMeldung = "Meyer" Or MeineMeldung = "Gottschalk" Then
+                cbProbezeit.Checked = True
+            End If
+        Next
+        If Not MeineMeldung = Index Then
+            MessageBox.Show("Dieser MA existiert nicht", "Fehler 404", MessageBoxButtons.RetryCancel, MessageBoxIcon.Hand)
+        ElseIf MeineMeldung Is "" Then
+            MessageBox.Show("Versuchen Sie es erneut", "Fehler", MessageBoxButtons.RetryCancel, MessageBoxIcon.Information)
+            GoTo Restart
         End If
-        txtName.Text = MeineMeldung
-        txtName.Enabled = False
-        dateAnfangDesArbeitsverhältnisses.Value = Beginn
+
+
+
 
     End Sub
 End Class

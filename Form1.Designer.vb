@@ -49,7 +49,7 @@ Partial Class Form1
         Me.lblName.Font = New System.Drawing.Font("Arial Narrow", 13.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblName.Location = New System.Drawing.Point(32, 41)
         Me.lblName.Name = "lblName"
-        Me.lblName.Size = New System.Drawing.Size(123, 34)
+        Me.lblName.Size = New System.Drawing.Size(98, 27)
         Me.lblName.TabIndex = 1
         Me.lblName.Text = "MA Name"
         '
@@ -141,7 +141,7 @@ Partial Class Form1
         Me.AcceptButton = Me.btnCheck
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(313, 503)
+        Me.ClientSize = New System.Drawing.Size(375, 503)
         Me.Controls.Add(Me.CheckBox1)
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.btnEnde)
