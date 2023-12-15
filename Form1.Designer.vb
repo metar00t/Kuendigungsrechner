@@ -32,7 +32,7 @@ Partial Class Form1
         Me.cbProbezeit = New System.Windows.Forms.CheckBox()
         Me.btnCheck = New System.Windows.Forms.Button()
         Me.btnEnde = New System.Windows.Forms.Button()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.cbTVH = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'txtName
@@ -59,7 +59,7 @@ Partial Class Form1
         Me.dateAnfangDesArbeitsverhältnisses.Location = New System.Drawing.Point(36, 146)
         Me.dateAnfangDesArbeitsverhältnisses.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.dateAnfangDesArbeitsverhältnisses.Name = "dateAnfangDesArbeitsverhältnisses"
-        Me.dateAnfangDesArbeitsverhältnisses.Size = New System.Drawing.Size(225, 22)
+        Me.dateAnfangDesArbeitsverhältnisses.Size = New System.Drawing.Size(247, 22)
         Me.dateAnfangDesArbeitsverhältnisses.TabIndex = 2
         '
         'Label1
@@ -77,7 +77,7 @@ Partial Class Form1
         Me.dateKündigungsTag.Location = New System.Drawing.Point(36, 248)
         Me.dateKündigungsTag.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.dateKündigungsTag.Name = "dateKündigungsTag"
-        Me.dateKündigungsTag.Size = New System.Drawing.Size(225, 22)
+        Me.dateKündigungsTag.Size = New System.Drawing.Size(247, 22)
         Me.dateKündigungsTag.TabIndex = 4
         '
         'Label2
@@ -123,26 +123,26 @@ Partial Class Form1
         Me.btnEnde.Text = "Ende"
         Me.btnEnde.UseVisualStyleBackColor = True
         '
-        'CheckBox1
+        'cbTVH
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Enabled = False
-        Me.CheckBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox1.Location = New System.Drawing.Point(36, 330)
-        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(75, 26)
-        Me.CheckBox1.TabIndex = 10
-        Me.CheckBox1.Text = "TV-H"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.cbTVH.AutoSize = True
+        Me.cbTVH.Enabled = False
+        Me.cbTVH.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cbTVH.Location = New System.Drawing.Point(36, 330)
+        Me.cbTVH.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.cbTVH.Name = "cbTVH"
+        Me.cbTVH.Size = New System.Drawing.Size(75, 26)
+        Me.cbTVH.TabIndex = 10
+        Me.cbTVH.Text = "TV-H"
+        Me.cbTVH.UseVisualStyleBackColor = True
         '
         'Form1
         '
         Me.AcceptButton = Me.btnCheck
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(375, 503)
-        Me.Controls.Add(Me.CheckBox1)
+        Me.ClientSize = New System.Drawing.Size(422, 503)
+        Me.Controls.Add(Me.cbTVH)
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.btnEnde)
         Me.Controls.Add(Me.btnCheck)
@@ -170,5 +170,5 @@ Partial Class Form1
     Friend WithEvents cbProbezeit As CheckBox
     Friend WithEvents btnCheck As Button
     Friend WithEvents btnEnde As Button
-    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents cbTVH As CheckBox
 End Class

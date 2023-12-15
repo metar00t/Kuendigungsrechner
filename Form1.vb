@@ -1,59 +1,85 @@
 ﻿' Dieser Code wurde von metar00t erstellt
 ' © metar00t
 
-
-Imports System.Xml.Schema
-
 Public Class Form1
+
     Private Sub btnEnde_Click(sender As Object, e As EventArgs) Handles btnEnde.Click
+        MessageBox.Show("Programm wird beendet", "Bis auf wiedersehen!", MessageBoxButtons.OK, MessageBoxIcon.None)
         End
     End Sub
 
-    Private Function BerechnungDerFristen(ByVal User As String, ByVal Start As Date)
-        Dim ZeitspanneBeginn, ZeitspanneKündigung As Long
-        If txtName.Text = User Then
-            ZeitspanneBeginn = DateDiff(DateInterval.Year, Start, Date.Now)
+    Private Function BerechnungBGB(ByVal BeginnArbeitsverhältnis As Date, Kündigungstag As Date)
+        Dim ZeitraumKündigung, DauerBetriebszugehörigkeitTag, DauerBetriebszugehörigkeitProbezeit As Long
+        DauerBetriebszugehörigkeitTag = DateDiff(DateInterval.Day, Date.Now, BeginnArbeitsverhältnis)
+        DauerBetriebszugehörigkeitProbezeit = DateDiff(DateInterval.Month, Date.Now, BeginnArbeitsverhältnis)
+        ZeitraumKündigung = DateDiff(DateInterval.Weekday, Date.Now, Kündigungstag)
+
+        If cbProbezeit.Checked = True Then
+            If DauerBetriebszugehörigkeitProbezeit >= 6 Then
+                If ZeitraumKündigung = 2 Then
+                    MessageBox.Show("Sie können fristgerecht kündigen", "Probezeit", MessageBoxButtons.OK, MessageBoxIcon.None)
+                    Return True
+                End If
+            ElseIf DauerBetriebszugehörigkeitProbezeit < 6 Then
+                MessageBox.Show("Sie haben die Frist nicht eingehalten!", "Probezeit", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return False
+            End If
         End If
-        If txtName.Text = User Then
-            ZeitspanneKündigung = DateDiff(DateInterval.Month, Start, dateKündigungsTag.Value)
-        End If
+        Return 0
     End Function
 
     Private Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
-        Dim Name() As String = {"Adams", "Meyer", "Beyer", "Gottschalk"}
-        Dim Beginn As Date = #08/14/2023#
-        Dim x As Integer = 0
-        BerechnungDerFristen(Name(x), Beginn)
+        Dim Failsafe As Long
+
+        If Failsafe < 0 Then
+            MessageBox.Show("Ungülter Zeitraum", "Böse", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+        BerechnungBGB(dateAnfangDesArbeitsverhältnisses.Value, dateKündigungsTag.Value)
     End Sub
 
     ' Vor dem Start des Eigentlichen Programmes, wird der Name des MA's erfasst und die dazugehörigen Daten eingetragen
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
 Restart:
         Dim Meldung, Titel, [Default] As String
-        Dim MeineMeldung As Object
+        Dim ErsteMeldung As Object
         Dim Beginn As Date = #08/14/2023#
-        Dim Name() As String = {"Adams", "Meyer", "Beyer", "Gottschalk", "Seefeldt", "Hübscher", "Diehl", "Ullmann"}
+        Dim Name() As String = {"Adams", "Hölz", "Meyer", "Beyer", "Gottschalk", "Seefeldt", "Hübscher", "Diehl", "Ullmann"}
         Dim x As Integer
-        Meldung = "Welches MA Profil wollen sie aufrufen?"
+        Meldung = "Welches MA Profil wollen Sie aufrufen?"
         Titel = "Register"
         [Default] = ""
 
-        MeineMeldung = InputBox(Meldung, Titel, [Default])
-        Dim Index As String = Name.IndexOf(Name, MeineMeldung)
+        ErsteMeldung = InputBox(Meldung, Titel, [Default])
+        Dim Index As Integer = Array.LastIndexOf(Name, ErsteMeldung)
+        Dim Abbruch = String.IsNullOrEmpty(ErsteMeldung)
 
-        For x = 0 To Index Step 1
-            txtName.Text = MeineMeldung
-            txtName.Enabled = False
-            If MeineMeldung = "Meyer" Or MeineMeldung = "Gottschalk" Then
-                cbProbezeit.Checked = True
-            End If
-        Next
-        If Not MeineMeldung = Index Then
-            MessageBox.Show("Dieser MA existiert nicht", "Fehler 404", MessageBoxButtons.RetryCancel, MessageBoxIcon.Hand)
-        ElseIf MeineMeldung Is "" Then
-            MessageBox.Show("Versuchen Sie es erneut", "Fehler", MessageBoxButtons.RetryCancel, MessageBoxIcon.Information)
+        If Abbruch Then
+            MessageBox.Show("Bitte tragen Sie einen MA Namen ein!", "Keine Eingabe erkannt", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             GoTo Restart
         End If
+        If x > Index Then
+            MessageBox.Show("Dieser MA existiert nicht", "Fehler 404", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            GoTo Restart
+        End If
+
+
+        For x = 0 To Index Step 1
+
+            txtName.Text = ErsteMeldung
+            txtName.Enabled = False
+            dateAnfangDesArbeitsverhältnisses.Value = Beginn
+
+            If ErsteMeldung = "Meyer" Or ErsteMeldung = "Gottschalk" Then
+                cbProbezeit.Checked = True
+            End If
+
+            If ErsteMeldung = "Adams" Or ErsteMeldung = "Beyer" Then
+                cbTVH.Checked = True
+            End If
+
+        Next
+
+
 
 
 
