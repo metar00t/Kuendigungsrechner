@@ -8,19 +8,31 @@ Public Class Form1
         End
     End Sub
 
-    Private Function BerechnungBGB(ByVal BeginnArbeitsverhältnis As Date, Kündigungstag As Date)
-        Dim ZeitraumKündigung, DauerBetriebszugehörigkeitTag, DauerBetriebszugehörigkeitProbezeit As Long
-        DauerBetriebszugehörigkeitTag = DateDiff(DateInterval.Day, Date.Now, BeginnArbeitsverhältnis)
+    Private Function BerechnungBGB(ByVal BeginnArbeitsverhältnis As Date, ByVal Kündigungstag As Date)
+        Dim Fristtag, ZeitraumKündigung, DauerBetriebszugehörigkeitWochen, DauerBetriebszugehörigkeitProbezeit As Long
+        DauerBetriebszugehörigkeitWochen = DateDiff(DateInterval.WeekOfYear, Date.Now, BeginnArbeitsverhältnis)
         DauerBetriebszugehörigkeitProbezeit = DateDiff(DateInterval.Month, Date.Now, BeginnArbeitsverhältnis)
-        ZeitraumKündigung = DateDiff(DateInterval.Weekday, Date.Now, Kündigungstag)
+        ZeitraumKündigung = DateDiff(DateInterval.WeekOfYear, Date.Now, Kündigungstag)
+        Fristtag = DateDiff(DateInterval.Day, Date.Now, Kündigungstag)
 
-        If cbProbezeit.Checked = True Then
-            If DauerBetriebszugehörigkeitProbezeit >= 6 Then
+        If cbProbezeit.Checked = False And cbTVH.Checked = False Then
+            If ZeitraumKündigung = 4 And Fristtag = 15 Then
+                MessageBox.Show("Sie können zum 15. kündigen!", "BGB", MessageBoxButtons.OK, MessageBoxIcon.None)
+            End If
+            If ZeitraumKündigung > 4 Then
+                MessageBox.Show("Sie können zum Ende des Monats kündigen!", "BGB", MessageBoxButtons.OK, MessageBoxIcon.None)
+            End If
+        End If
+
+        If cbProbezeit.Checked = True And cbTVH.Checked = False Then
+            If DauerBetriebszugehörigkeitProbezeit <= 6 Then
+                'Darüberschauen lassen
                 If ZeitraumKündigung = 2 Then
                     MessageBox.Show("Sie können fristgerecht kündigen", "Probezeit", MessageBoxButtons.OK, MessageBoxIcon.None)
                     Return True
                 End If
-            ElseIf DauerBetriebszugehörigkeitProbezeit < 6 Then
+            End If
+            If ZeitraumKündigung > 2 Then
                 MessageBox.Show("Sie haben die Frist nicht eingehalten!", "Probezeit", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Return False
             End If

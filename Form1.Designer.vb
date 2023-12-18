@@ -33,6 +33,8 @@ Partial Class Form1
         Me.btnCheck = New System.Windows.Forms.Button()
         Me.btnEnde = New System.Windows.Forms.Button()
         Me.cbTVH = New System.Windows.Forms.CheckBox()
+        Me.dateAktuellesDatum = New System.Windows.Forms.DateTimePicker()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'txtName
@@ -136,12 +138,35 @@ Partial Class Form1
         Me.cbTVH.Text = "TV-H"
         Me.cbTVH.UseVisualStyleBackColor = True
         '
+        'dateAktuellesDatum
+        '
+        Me.dateAktuellesDatum.Enabled = False
+        Me.dateAktuellesDatum.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dateAktuellesDatum.Location = New System.Drawing.Point(295, 449)
+        Me.dateAktuellesDatum.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.dateAktuellesDatum.Name = "dateAktuellesDatum"
+        Me.dateAktuellesDatum.Size = New System.Drawing.Size(115, 22)
+        Me.dateAktuellesDatum.TabIndex = 11
+        Me.dateAktuellesDatum.Value = New Date(2023, 12, 18, 10, 11, 36, 0)
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(275, 410)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(135, 24)
+        Me.Label3.TabIndex = 12
+        Me.Label3.Text = "Aktuelles Datum"
+        '
         'Form1
         '
         Me.AcceptButton = Me.btnCheck
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(422, 503)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.dateAktuellesDatum)
         Me.Controls.Add(Me.cbTVH)
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.btnEnde)
@@ -171,4 +196,6 @@ Partial Class Form1
     Friend WithEvents btnCheck As Button
     Friend WithEvents btnEnde As Button
     Friend WithEvents cbTVH As CheckBox
+    Friend WithEvents dateAktuellesDatum As DateTimePicker
+    Friend WithEvents Label3 As Label
 End Class
