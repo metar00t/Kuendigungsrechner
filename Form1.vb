@@ -8,35 +8,50 @@ Public Class Form1
         End
     End Sub
 
-    Private Function BerechnungBGB(ByVal BeginnArbeitsverhältnis As Date, ByVal Kündigungstag As Date)
-        Dim Fristtag, ZeitraumKündigung, DauerBetriebszugehörigkeitWochen, DauerBetriebszugehörigkeitProbezeit As Long
-        DauerBetriebszugehörigkeitWochen = DateDiff(DateInterval.WeekOfYear, Date.Now, BeginnArbeitsverhältnis)
-        DauerBetriebszugehörigkeitProbezeit = DateDiff(DateInterval.Month, Date.Now, BeginnArbeitsverhältnis)
-        ZeitraumKündigung = DateDiff(DateInterval.WeekOfYear, Date.Now, Kündigungstag)
-        Fristtag = DateDiff(DateInterval.Day, Date.Now, Kündigungstag)
+    Private Function Berechnung(ByVal BeginnArbeitsverhältnis As Date, ByVal Kündigungstag As Date)
+        Dim Fristtag, ZeitraumKündigungBGB, ZeitraumKündigungTVH_Jahre, ZeitraumKündigungTVH_Wochen, DauerBetriebszugehörigkeitWochen, DauerBetriebszugehörigkeitMonat, DauerBetriebszugehörigkeitJahre As Long
+        DauerBetriebszugehörigkeitWochen = DateDiff(DateInterval.WeekOfYear, dateAktuellesDatum.Value, BeginnArbeitsverhältnis)
+        ZeitraumKündigungBGB = DateDiff(DateInterval.Weekday, dateAktuellesDatum.Value, Kündigungstag)
+        Fristtag = DateDiff(DateInterval.Day, dateAktuellesDatum.Value, Kündigungstag)
+        DauerBetriebszugehörigkeitMonat = DateDiff(DateInterval.Month, dateAktuellesDatum.Value, BeginnArbeitsverhältnis)
+        ZeitraumKündigungTVH_Wochen = DateDiff(DateInterval.WeekOfYear, dateAktuellesDatum.Value, Kündigungstag)
+        ZeitraumKündigungTVH_Jahre = DateDiff(DateInterval.Year, dateAktuellesDatum.Value, Kündigungstag)
+        DauerBetriebszugehörigkeitJahre = DateDiff(DateInterval.Year, dateAktuellesDatum.Value, BeginnArbeitsverhältnis)
+
+        ' Abfrage, wenn Die Checkboxen "Probezeit" & "TVH" nicht abgehakt wurden
 
         If cbProbezeit.Checked = False And cbTVH.Checked = False Then
-            If ZeitraumKündigung = 4 And Fristtag = 15 Then
+            If ZeitraumKündigungBGB = 4 And Fristtag = 15 Then
                 MessageBox.Show("Sie können zum 15. kündigen!", "BGB", MessageBoxButtons.OK, MessageBoxIcon.None)
             End If
-            If ZeitraumKündigung > 4 Then
+            If ZeitraumKündigungBGB = 4 Then
                 MessageBox.Show("Sie können zum Ende des Monats kündigen!", "BGB", MessageBoxButtons.OK, MessageBoxIcon.None)
+            End If
+            If ZeitraumKündigungBGB < 4 Then
+                MessageBox.Show("Frist nicht eingehalten!", "BGB", MessageBoxButtons.OK, MessageBoxIcon.None)
             End If
         End If
 
+        'Abfrage, wenn nur Die Checkbox "Probezeit" abgehakt wurde
+
         If cbProbezeit.Checked = True And cbTVH.Checked = False Then
-            If DauerBetriebszugehörigkeitProbezeit <= 6 Then
-                'Darüberschauen lassen
-                If ZeitraumKündigung = 2 Then
+            If NumMonateProbezeit.Value <= 6 Then
+                If ZeitraumKündigungBGB = 2 Then
                     MessageBox.Show("Sie können fristgerecht kündigen", "Probezeit", MessageBoxButtons.OK, MessageBoxIcon.None)
-                    Return True
+                Else
+                    MessageBox.Show("Sie haben die Frist nicht eingehalten!", "Probezeit", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If
             End If
-            If ZeitraumKündigung > 2 Then
-                MessageBox.Show("Sie haben die Frist nicht eingehalten!", "Probezeit", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                Return False
+        End If
+
+        'Abfrage, wenn nur Die Checkbox "TVH" abgehakt wurde
+
+        If cbProbezeit.Checked = False And cbTVH.Checked = True Then
+            If DauerBetriebszugehörigkeitMonat <= 6 Then
+                ' TODO: Auswertung der TV-H Berechnung!
             End If
         End If
+
         Return 0
     End Function
 
@@ -46,18 +61,19 @@ Public Class Form1
         If Failsafe < 0 Then
             MessageBox.Show("Ungülter Zeitraum", "Böse", MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
-        BerechnungBGB(dateAnfangDesArbeitsverhältnisses.Value, dateKündigungsTag.Value)
+        Berechnung(dateAnfangDesArbeitsverhältnisses.Value, dateKündigungsTag.Value)
     End Sub
 
     ' Vor dem Start des Eigentlichen Programmes, wird der Name des MA's erfasst und die dazugehörigen Daten eingetragen
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        dateAktuellesDatum.Value = Today
 Restart:
         Dim Meldung, Titel, [Default] As String
         Dim ErsteMeldung As Object
         Dim Beginn As Date = #08/14/2023#
         Dim Name() As String = {"Adams", "Hölz", "Meyer", "Beyer", "Gottschalk", "Seefeldt", "Hübscher", "Diehl", "Ullmann"}
         Dim x As Integer
-        Meldung = "Welches MA Profil wollen Sie aufrufen?"
+        Meldung = "Welchen MA möchten Sie diesmal kündigen?"
         Titel = "Register"
         [Default] = ""
 
@@ -69,6 +85,7 @@ Restart:
             MessageBox.Show("Bitte tragen Sie einen MA Namen ein!", "Keine Eingabe erkannt", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             GoTo Restart
         End If
+
         If x > Index Then
             MessageBox.Show("Dieser MA existiert nicht", "Fehler 404", MessageBoxButtons.OK, MessageBoxIcon.Error)
             GoTo Restart
@@ -83,6 +100,7 @@ Restart:
 
             If ErsteMeldung = "Meyer" Or ErsteMeldung = "Gottschalk" Then
                 cbProbezeit.Checked = True
+                NumMonateProbezeit.Visible = True
             End If
 
             If ErsteMeldung = "Adams" Or ErsteMeldung = "Beyer" Then

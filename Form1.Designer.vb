@@ -35,6 +35,8 @@ Partial Class Form1
         Me.cbTVH = New System.Windows.Forms.CheckBox()
         Me.dateAktuellesDatum = New System.Windows.Forms.DateTimePicker()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.NumMonateProbezeit = New System.Windows.Forms.NumericUpDown()
+        CType(Me.NumMonateProbezeit, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'txtName
@@ -117,6 +119,7 @@ Partial Class Form1
         '
         'btnEnde
         '
+        Me.btnEnde.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.btnEnde.Location = New System.Drawing.Point(36, 424)
         Me.btnEnde.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnEnde.Name = "btnEnde"
@@ -159,12 +162,26 @@ Partial Class Form1
         Me.Label3.TabIndex = 12
         Me.Label3.Text = "Aktuelles Datum"
         '
+        'NumMonateProbezeit
+        '
+        Me.NumMonateProbezeit.Location = New System.Drawing.Point(163, 300)
+        Me.NumMonateProbezeit.Maximum = New Decimal(New Integer() {6, 0, 0, 0})
+        Me.NumMonateProbezeit.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumMonateProbezeit.Name = "NumMonateProbezeit"
+        Me.NumMonateProbezeit.Size = New System.Drawing.Size(57, 22)
+        Me.NumMonateProbezeit.TabIndex = 13
+        Me.NumMonateProbezeit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.NumMonateProbezeit.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumMonateProbezeit.Visible = False
+        '
         'Form1
         '
         Me.AcceptButton = Me.btnCheck
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.CancelButton = Me.btnEnde
         Me.ClientSize = New System.Drawing.Size(422, 503)
+        Me.Controls.Add(Me.NumMonateProbezeit)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.dateAktuellesDatum)
         Me.Controls.Add(Me.cbTVH)
@@ -179,8 +196,11 @@ Partial Class Form1
         Me.Controls.Add(Me.lblName)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "Form1"
         Me.Text = "Kündigungsrechner"
+        CType(Me.NumMonateProbezeit, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -198,4 +218,5 @@ Partial Class Form1
     Friend WithEvents cbTVH As CheckBox
     Friend WithEvents dateAktuellesDatum As DateTimePicker
     Friend WithEvents Label3 As Label
+    Friend WithEvents NumMonateProbezeit As NumericUpDown
 End Class
