@@ -3,20 +3,64 @@
 
 Public Class Form1
 
-    Private Sub btnEnde_Click(sender As Object, e As EventArgs) Handles btnEnde.Click
-        MessageBox.Show("Programm wird beendet", "Bis auf wiedersehen!", MessageBoxButtons.OK, MessageBoxIcon.None)
-        End
+    ' Vor dem Start des Eigentlichen Programmes, wird der Name des MA's erfasst und die dazugehörigen Daten eingetragen
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        dateAktuellesDatum.Value = Today
+Restart:
+        Dim Meldung, Titel, [Default] As String
+        Dim ErsteMeldung As Object
+        Dim Beginn As Date = #08/14/2023#
+        Dim Name() As String = {"Adams", "Hölz", "Meyer", "Beyer", "Gottschalk", "Seefeldt", "Hübscher", "Diehl", "Ullmann"}
+        Dim x As Integer
+        Meldung = "Welches MA Profil wollen Sie aufrufen?"
+        Titel = "Register"
+        [Default] = ""
+
+        ErsteMeldung = InputBox(Meldung, Titel, [Default])
+        Dim Index As Integer = Array.LastIndexOf(Name, ErsteMeldung)
+        Dim FehlendeEingabe = String.IsNullOrEmpty(ErsteMeldung)
+
+        If FehlendeEingabe Then
+            MessageBox.Show("Bitte tragen Sie einen MA Namen ein!", "Keine Eingabe erkannt", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            GoTo Restart
+        End If
+
+        If x > Index Then
+            MessageBox.Show("Dieser MA existiert nicht", "Fehler 404", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            GoTo Restart
+        End If
+
+        For x = 0 To Index Step 1
+
+            txtName.Text = ErsteMeldung
+            txtName.Enabled = False
+            dateAnfangDesArbeitsverhältnisses.Value = Beginn
+
+            If ErsteMeldung = "Meyer" Or ErsteMeldung = "Gottschalk" Then
+                cbProbezeit.Checked = True
+                NumMonateProbezeit.Visible = True
+            End If
+
+            If ErsteMeldung = "Adams" Or ErsteMeldung = "Beyer" Then
+                cbTVH.Checked = True
+                NumTVH.Visible = True
+            End If
+
+        Next
+
     End Sub
 
     Private Function Berechnung(ByVal BeginnArbeitsverhältnis As Date, ByVal Kündigungstag As Date)
-        Dim Fristtag, ZeitraumKündigungBGB, ZeitraumKündigungTVH_Jahre, ZeitraumKündigungTVH_Wochen, DauerBetriebszugehörigkeitWochen, DauerBetriebszugehörigkeitMonat, DauerBetriebszugehörigkeitJahre As Long
+        Dim Fristtag, ZeitraumKündigungBGB, ZeitraumKündigungTVH_Jahre, ZeitraumKündigungTVH_Wochen, DauerBetriebszugehörigkeitWochen, DauerBetriebszugehörigkeitMonat As Long
         DauerBetriebszugehörigkeitWochen = DateDiff(DateInterval.WeekOfYear, dateAktuellesDatum.Value, BeginnArbeitsverhältnis)
         ZeitraumKündigungBGB = DateDiff(DateInterval.Weekday, dateAktuellesDatum.Value, Kündigungstag)
         Fristtag = DateDiff(DateInterval.Day, dateAktuellesDatum.Value, Kündigungstag)
         DauerBetriebszugehörigkeitMonat = DateDiff(DateInterval.Month, dateAktuellesDatum.Value, BeginnArbeitsverhältnis)
         ZeitraumKündigungTVH_Wochen = DateDiff(DateInterval.WeekOfYear, dateAktuellesDatum.Value, Kündigungstag)
         ZeitraumKündigungTVH_Jahre = DateDiff(DateInterval.Year, dateAktuellesDatum.Value, Kündigungstag)
-        DauerBetriebszugehörigkeitJahre = DateDiff(DateInterval.Year, dateAktuellesDatum.Value, BeginnArbeitsverhältnis)
+        'Berechnung des Letzten Tags vom Monat seit Beginn des Arbeitsverhältnisses
+        Dim LetzterTagVomMonat As Date = DateSerial(Year(BeginnArbeitsverhältnis), Month(BeginnArbeitsverhältnis) + NumTVH.Value, 0)
+
 
         ' Abfrage, wenn Die Checkboxen "Probezeit" & "TVH" nicht abgehakt wurden
 
@@ -48,14 +92,21 @@ Public Class Form1
 
         If cbProbezeit.Checked = False And cbTVH.Checked = True Then
             If DauerBetriebszugehörigkeitMonat <= 6 Then
-                ' TODO: Auswertung der TV-H Berechnung!
+                ' Abzug von 14 Tagen (2 Wochen) für die erste Kündigungsfrist
+                LetzterTagVomMonat = DateAdd(DateInterval.Day, -14, LetzterTagVomMonat)
+                If Kündigungstag = LetzterTagVomMonat Then
+                    MessageBox.Show("Frist eingehalten", "Erfolg", MessageBoxButtons.OK)
+                Else
+                    'TODO: DateTime Format anpassen
+                    MessageBox.Show("Frist am " & dateKündigungsTag.Value & " nicht eingehalten", "Error", MessageBoxButtons.OK)
+                End If
             End If
         End If
 
         Return 0
     End Function
 
-    Private Sub btnCheck_Click(sender As Object, e As EventArgs) Handles btnCheck.Click
+    Private Sub BtnBerechnen_Click(sender As Object, e As EventArgs) Handles BtnBerechnen.Click
         Dim Failsafe As Long
 
         If Failsafe < 0 Then
@@ -63,58 +114,11 @@ Public Class Form1
         End If
         Berechnung(dateAnfangDesArbeitsverhältnisses.Value, dateKündigungsTag.Value)
     End Sub
-
-    ' Vor dem Start des Eigentlichen Programmes, wird der Name des MA's erfasst und die dazugehörigen Daten eingetragen
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
-        dateAktuellesDatum.Value = Today
-Restart:
-        Dim Meldung, Titel, [Default] As String
-        Dim ErsteMeldung As Object
-        Dim Beginn As Date = #08/14/2023#
-        Dim Name() As String = {"Adams", "Hölz", "Meyer", "Beyer", "Gottschalk", "Seefeldt", "Hübscher", "Diehl", "Ullmann"}
-        Dim x As Integer
-        Meldung = "Welchen MA möchten Sie diesmal kündigen?"
-        Titel = "Register"
-        [Default] = ""
-
-        ErsteMeldung = InputBox(Meldung, Titel, [Default])
-        Dim Index As Integer = Array.LastIndexOf(Name, ErsteMeldung)
-        Dim Abbruch = String.IsNullOrEmpty(ErsteMeldung)
-
-        If Abbruch Then
-            MessageBox.Show("Bitte tragen Sie einen MA Namen ein!", "Keine Eingabe erkannt", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            GoTo Restart
-        End If
-
-        If x > Index Then
-            MessageBox.Show("Dieser MA existiert nicht", "Fehler 404", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            GoTo Restart
-        End If
-
-
-        For x = 0 To Index Step 1
-
-            txtName.Text = ErsteMeldung
-            txtName.Enabled = False
-            dateAnfangDesArbeitsverhältnisses.Value = Beginn
-
-            If ErsteMeldung = "Meyer" Or ErsteMeldung = "Gottschalk" Then
-                cbProbezeit.Checked = True
-                NumMonateProbezeit.Visible = True
-            End If
-
-            If ErsteMeldung = "Adams" Or ErsteMeldung = "Beyer" Then
-                cbTVH.Checked = True
-            End If
-
-        Next
-
-
-
-
-
-
+    Private Sub btnEnde_Click(sender As Object, e As EventArgs) Handles btnEnde.Click
+        MessageBox.Show("Programm wird beendet", "Bis auf wiedersehen!", MessageBoxButtons.OK, MessageBoxIcon.None)
+        End
     End Sub
+
 End Class
 
 'Wiederholen und nutzen Sie Ihre Kenntnisse aus Abschnitt F der FIAusbV.

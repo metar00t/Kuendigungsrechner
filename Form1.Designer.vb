@@ -30,13 +30,15 @@ Partial Class Form1
         Me.dateKündigungsTag = New System.Windows.Forms.DateTimePicker()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cbProbezeit = New System.Windows.Forms.CheckBox()
-        Me.btnCheck = New System.Windows.Forms.Button()
+        Me.BtnBerechnen = New System.Windows.Forms.Button()
         Me.btnEnde = New System.Windows.Forms.Button()
         Me.cbTVH = New System.Windows.Forms.CheckBox()
         Me.dateAktuellesDatum = New System.Windows.Forms.DateTimePicker()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.NumMonateProbezeit = New System.Windows.Forms.NumericUpDown()
+        Me.NumTVH = New System.Windows.Forms.NumericUpDown()
         CType(Me.NumMonateProbezeit, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumTVH, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'txtName
@@ -60,6 +62,7 @@ Partial Class Form1
         'dateAnfangDesArbeitsverhältnisses
         '
         Me.dateAnfangDesArbeitsverhältnisses.Enabled = False
+        Me.dateAnfangDesArbeitsverhältnisses.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dateAnfangDesArbeitsverhältnisses.Location = New System.Drawing.Point(36, 146)
         Me.dateAnfangDesArbeitsverhältnisses.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.dateAnfangDesArbeitsverhältnisses.Name = "dateAnfangDesArbeitsverhältnisses"
@@ -78,6 +81,7 @@ Partial Class Form1
         '
         'dateKündigungsTag
         '
+        Me.dateKündigungsTag.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dateKündigungsTag.Location = New System.Drawing.Point(36, 248)
         Me.dateKündigungsTag.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.dateKündigungsTag.Name = "dateKündigungsTag"
@@ -107,15 +111,15 @@ Partial Class Form1
         Me.cbProbezeit.Text = "Probezeit"
         Me.cbProbezeit.UseVisualStyleBackColor = True
         '
-        'btnCheck
+        'BtnBerechnen
         '
-        Me.btnCheck.Location = New System.Drawing.Point(36, 373)
-        Me.btnCheck.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.btnCheck.Name = "btnCheck"
-        Me.btnCheck.Size = New System.Drawing.Size(184, 47)
-        Me.btnCheck.TabIndex = 8
-        Me.btnCheck.Text = "Berechnen"
-        Me.btnCheck.UseVisualStyleBackColor = True
+        Me.BtnBerechnen.Location = New System.Drawing.Point(36, 373)
+        Me.BtnBerechnen.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.BtnBerechnen.Name = "BtnBerechnen"
+        Me.BtnBerechnen.Size = New System.Drawing.Size(184, 47)
+        Me.BtnBerechnen.TabIndex = 8
+        Me.BtnBerechnen.Text = "Berechnen"
+        Me.BtnBerechnen.UseVisualStyleBackColor = True
         '
         'btnEnde
         '
@@ -174,20 +178,33 @@ Partial Class Form1
         Me.NumMonateProbezeit.Value = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NumMonateProbezeit.Visible = False
         '
+        'NumTVH
+        '
+        Me.NumTVH.Location = New System.Drawing.Point(163, 334)
+        Me.NumTVH.Maximum = New Decimal(New Integer() {6, 0, 0, 0})
+        Me.NumTVH.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumTVH.Name = "NumTVH"
+        Me.NumTVH.Size = New System.Drawing.Size(57, 22)
+        Me.NumTVH.TabIndex = 14
+        Me.NumTVH.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.NumTVH.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumTVH.Visible = False
+        '
         'Form1
         '
-        Me.AcceptButton = Me.btnCheck
+        Me.AcceptButton = Me.BtnBerechnen
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.btnEnde
         Me.ClientSize = New System.Drawing.Size(422, 503)
+        Me.Controls.Add(Me.NumTVH)
         Me.Controls.Add(Me.NumMonateProbezeit)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.dateAktuellesDatum)
         Me.Controls.Add(Me.cbTVH)
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.btnEnde)
-        Me.Controls.Add(Me.btnCheck)
+        Me.Controls.Add(Me.BtnBerechnen)
         Me.Controls.Add(Me.cbProbezeit)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.dateKündigungsTag)
@@ -201,6 +218,7 @@ Partial Class Form1
         Me.Name = "Form1"
         Me.Text = "Kündigungsrechner"
         CType(Me.NumMonateProbezeit, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumTVH, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -213,10 +231,11 @@ Partial Class Form1
     Friend WithEvents dateKündigungsTag As DateTimePicker
     Friend WithEvents Label2 As Label
     Friend WithEvents cbProbezeit As CheckBox
-    Friend WithEvents btnCheck As Button
+    Friend WithEvents BtnBerechnen As Button
     Friend WithEvents btnEnde As Button
     Friend WithEvents cbTVH As CheckBox
     Friend WithEvents dateAktuellesDatum As DateTimePicker
     Friend WithEvents Label3 As Label
     Friend WithEvents NumMonateProbezeit As NumericUpDown
+    Friend WithEvents NumTVH As NumericUpDown
 End Class
