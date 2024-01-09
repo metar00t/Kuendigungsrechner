@@ -1,4 +1,4 @@
-﻿' Dieser Code wurde von metar00t erstellt
+' Dieser Code wurde von metar00t erstellt
 ' © metar00t
 
 Public Class Form1
@@ -61,6 +61,7 @@ Restart:
         'Berechnung des Letzten Tags vom Monat seit Beginn des Arbeitsverhältnisses
         Dim LetzterTagVomMonat As Date = DateSerial(Year(BeginnArbeitsverhältnis), Month(BeginnArbeitsverhältnis) + NumTVH.Value, 0)
 
+				' In den Messageboxen Das Kündigungsdatum ausgeben lassen (siehe BGB)
 
         ' Abfrage, wenn Die Checkboxen "Probezeit" & "TVH" nicht abgehakt wurden
 
