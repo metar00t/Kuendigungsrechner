@@ -33,12 +33,17 @@ Partial Class Form1
         Me.BtnBerechnen = New System.Windows.Forms.Button()
         Me.btnEnde = New System.Windows.Forms.Button()
         Me.cbTVH = New System.Windows.Forms.CheckBox()
-        Me.dateAktuellesDatum = New System.Windows.Forms.DateTimePicker()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.NumMonateProbezeit = New System.Windows.Forms.NumericUpDown()
-        Me.NumTVH = New System.Windows.Forms.NumericUpDown()
+        Me.NumTVHMonate = New System.Windows.Forms.NumericUpDown()
+        Me.LblProbezeit = New System.Windows.Forms.Label()
+        Me.LblTVH = New System.Windows.Forms.Label()
+        Me.LblTVHJahre = New System.Windows.Forms.Label()
+        Me.NumTVHJahr = New System.Windows.Forms.NumericUpDown()
+        Me.dateAktuellesDatum = New System.Windows.Forms.DateTimePicker()
         CType(Me.NumMonateProbezeit, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.NumTVH, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumTVHMonate, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.NumTVHJahr, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'txtName
@@ -66,7 +71,7 @@ Partial Class Form1
         Me.dateAnfangDesArbeitsverhältnisses.Location = New System.Drawing.Point(36, 146)
         Me.dateAnfangDesArbeitsverhältnisses.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.dateAnfangDesArbeitsverhältnisses.Name = "dateAnfangDesArbeitsverhältnisses"
-        Me.dateAnfangDesArbeitsverhältnisses.Size = New System.Drawing.Size(247, 22)
+        Me.dateAnfangDesArbeitsverhältnisses.Size = New System.Drawing.Size(108, 22)
         Me.dateAnfangDesArbeitsverhältnisses.TabIndex = 2
         '
         'Label1
@@ -85,7 +90,7 @@ Partial Class Form1
         Me.dateKündigungsTag.Location = New System.Drawing.Point(36, 248)
         Me.dateKündigungsTag.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.dateKündigungsTag.Name = "dateKündigungsTag"
-        Me.dateKündigungsTag.Size = New System.Drawing.Size(247, 22)
+        Me.dateKündigungsTag.Size = New System.Drawing.Size(108, 22)
         Me.dateKündigungsTag.TabIndex = 4
         '
         'Label2
@@ -113,7 +118,7 @@ Partial Class Form1
         '
         'BtnBerechnen
         '
-        Me.BtnBerechnen.Location = New System.Drawing.Point(36, 373)
+        Me.BtnBerechnen.Location = New System.Drawing.Point(36, 420)
         Me.BtnBerechnen.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.BtnBerechnen.Name = "BtnBerechnen"
         Me.BtnBerechnen.Size = New System.Drawing.Size(184, 47)
@@ -124,7 +129,7 @@ Partial Class Form1
         'btnEnde
         '
         Me.btnEnde.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.btnEnde.Location = New System.Drawing.Point(36, 424)
+        Me.btnEnde.Location = New System.Drawing.Point(36, 471)
         Me.btnEnde.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnEnde.Name = "btnEnde"
         Me.btnEnde.Size = New System.Drawing.Size(184, 47)
@@ -137,7 +142,7 @@ Partial Class Form1
         Me.cbTVH.AutoSize = True
         Me.cbTVH.Enabled = False
         Me.cbTVH.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cbTVH.Location = New System.Drawing.Point(36, 330)
+        Me.cbTVH.Location = New System.Drawing.Point(201, 300)
         Me.cbTVH.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.cbTVH.Name = "cbTVH"
         Me.cbTVH.Size = New System.Drawing.Size(75, 26)
@@ -145,22 +150,11 @@ Partial Class Form1
         Me.cbTVH.Text = "TV-H"
         Me.cbTVH.UseVisualStyleBackColor = True
         '
-        'dateAktuellesDatum
-        '
-        Me.dateAktuellesDatum.Enabled = False
-        Me.dateAktuellesDatum.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dateAktuellesDatum.Location = New System.Drawing.Point(295, 449)
-        Me.dateAktuellesDatum.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
-        Me.dateAktuellesDatum.Name = "dateAktuellesDatum"
-        Me.dateAktuellesDatum.Size = New System.Drawing.Size(115, 22)
-        Me.dateAktuellesDatum.TabIndex = 11
-        Me.dateAktuellesDatum.Value = New Date(2023, 12, 18, 10, 11, 36, 0)
-        '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(275, 410)
+        Me.Label3.Location = New System.Drawing.Point(275, 457)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(135, 24)
         Me.Label3.TabIndex = 12
@@ -168,7 +162,7 @@ Partial Class Form1
         '
         'NumMonateProbezeit
         '
-        Me.NumMonateProbezeit.Location = New System.Drawing.Point(163, 300)
+        Me.NumMonateProbezeit.Location = New System.Drawing.Point(36, 346)
         Me.NumMonateProbezeit.Maximum = New Decimal(New Integer() {6, 0, 0, 0})
         Me.NumMonateProbezeit.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NumMonateProbezeit.Name = "NumMonateProbezeit"
@@ -178,17 +172,71 @@ Partial Class Form1
         Me.NumMonateProbezeit.Value = New Decimal(New Integer() {1, 0, 0, 0})
         Me.NumMonateProbezeit.Visible = False
         '
-        'NumTVH
+        'NumTVHMonate
         '
-        Me.NumTVH.Location = New System.Drawing.Point(163, 334)
-        Me.NumTVH.Maximum = New Decimal(New Integer() {6, 0, 0, 0})
-        Me.NumTVH.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.NumTVH.Name = "NumTVH"
-        Me.NumTVH.Size = New System.Drawing.Size(57, 22)
-        Me.NumTVH.TabIndex = 14
-        Me.NumTVH.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        Me.NumTVH.Value = New Decimal(New Integer() {1, 0, 0, 0})
-        Me.NumTVH.Visible = False
+        Me.NumTVHMonate.Location = New System.Drawing.Point(201, 357)
+        Me.NumTVHMonate.Maximum = New Decimal(New Integer() {12, 0, 0, 0})
+        Me.NumTVHMonate.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumTVHMonate.Name = "NumTVHMonate"
+        Me.NumTVHMonate.Size = New System.Drawing.Size(57, 22)
+        Me.NumTVHMonate.TabIndex = 14
+        Me.NumTVHMonate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.NumTVHMonate.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumTVHMonate.Visible = False
+        '
+        'LblProbezeit
+        '
+        Me.LblProbezeit.AutoSize = True
+        Me.LblProbezeit.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblProbezeit.Location = New System.Drawing.Point(109, 344)
+        Me.LblProbezeit.Name = "LblProbezeit"
+        Me.LblProbezeit.Size = New System.Drawing.Size(58, 24)
+        Me.LblProbezeit.TabIndex = 15
+        Me.LblProbezeit.Text = "Monat"
+        Me.LblProbezeit.Visible = False
+        '
+        'LblTVH
+        '
+        Me.LblTVH.AutoSize = True
+        Me.LblTVH.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblTVH.Location = New System.Drawing.Point(274, 355)
+        Me.LblTVH.Name = "LblTVH"
+        Me.LblTVH.Size = New System.Drawing.Size(58, 24)
+        Me.LblTVH.TabIndex = 16
+        Me.LblTVH.Text = "Monat"
+        Me.LblTVH.Visible = False
+        '
+        'LblTVHJahre
+        '
+        Me.LblTVHJahre.AutoSize = True
+        Me.LblTVHJahre.Font = New System.Drawing.Font("Arial Narrow", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LblTVHJahre.Location = New System.Drawing.Point(439, 357)
+        Me.LblTVHJahre.Name = "LblTVHJahre"
+        Me.LblTVHJahre.Size = New System.Drawing.Size(44, 24)
+        Me.LblTVHJahre.TabIndex = 18
+        Me.LblTVHJahre.Text = "Jahr"
+        Me.LblTVHJahre.Visible = False
+        '
+        'NumTVHJahr
+        '
+        Me.NumTVHJahr.Location = New System.Drawing.Point(366, 359)
+        Me.NumTVHJahr.Maximum = New Decimal(New Integer() {12, 0, 0, 0})
+        Me.NumTVHJahr.Name = "NumTVHJahr"
+        Me.NumTVHJahr.Size = New System.Drawing.Size(57, 22)
+        Me.NumTVHJahr.TabIndex = 17
+        Me.NumTVHJahr.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.NumTVHJahr.Value = New Decimal(New Integer() {1, 0, 0, 0})
+        Me.NumTVHJahr.Visible = False
+        '
+        'dateAktuellesDatum
+        '
+        Me.dateAktuellesDatum.Enabled = False
+        Me.dateAktuellesDatum.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dateAktuellesDatum.Location = New System.Drawing.Point(279, 496)
+        Me.dateAktuellesDatum.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.dateAktuellesDatum.Name = "dateAktuellesDatum"
+        Me.dateAktuellesDatum.Size = New System.Drawing.Size(131, 22)
+        Me.dateAktuellesDatum.TabIndex = 4
         '
         'Form1
         '
@@ -196,21 +244,26 @@ Partial Class Form1
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.btnEnde
-        Me.ClientSize = New System.Drawing.Size(422, 503)
-        Me.Controls.Add(Me.NumTVH)
+        Me.ClientSize = New System.Drawing.Size(422, 539)
+        Me.Controls.Add(Me.LblTVH)
+        Me.Controls.Add(Me.LblProbezeit)
+        Me.Controls.Add(Me.NumTVHMonate)
         Me.Controls.Add(Me.NumMonateProbezeit)
         Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.dateAktuellesDatum)
         Me.Controls.Add(Me.cbTVH)
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.btnEnde)
         Me.Controls.Add(Me.BtnBerechnen)
         Me.Controls.Add(Me.cbProbezeit)
         Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.dateAktuellesDatum)
         Me.Controls.Add(Me.dateKündigungsTag)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.dateAnfangDesArbeitsverhältnisses)
         Me.Controls.Add(Me.lblName)
+        Me.Controls.Add(Me.LblTVHJahre)
+        Me.Controls.Add(Me.NumTVHJahr)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.MaximizeBox = False
@@ -218,7 +271,8 @@ Partial Class Form1
         Me.Name = "Form1"
         Me.Text = "Kündigungsrechner"
         CType(Me.NumMonateProbezeit, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.NumTVH, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumTVHMonate, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.NumTVHJahr, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -234,8 +288,12 @@ Partial Class Form1
     Friend WithEvents BtnBerechnen As Button
     Friend WithEvents btnEnde As Button
     Friend WithEvents cbTVH As CheckBox
-    Friend WithEvents dateAktuellesDatum As DateTimePicker
     Friend WithEvents Label3 As Label
     Friend WithEvents NumMonateProbezeit As NumericUpDown
-    Friend WithEvents NumTVH As NumericUpDown
+    Friend WithEvents NumTVHMonate As NumericUpDown
+    Friend WithEvents LblProbezeit As Label
+    Friend WithEvents LblTVH As Label
+    Friend WithEvents LblTVHJahre As Label
+    Friend WithEvents NumTVHJahr As NumericUpDown
+    Friend WithEvents dateAktuellesDatum As DateTimePicker
 End Class
