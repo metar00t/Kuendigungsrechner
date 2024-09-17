@@ -6,7 +6,6 @@ Public Class Form1
     ' Vor dem Start des Eigentlichen Programmes, wird der Name des MA's erfasst und die dazugehörigen Daten eingetragen
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         dateAktuellesDatum.Value = Date.Today
-Restart:
         Dim Meldung, Titel, [Default] As String
         Dim ErsteMeldung As Object
         Dim Beginn As Date = #08/14/2023#
@@ -22,12 +21,12 @@ Restart:
 
         If FehlendeEingabe Then
             MessageBox.Show("Bitte tragen Sie einen MA Namen ein!", "Keine Eingabe erkannt", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            GoTo Restart
+            Close()
         End If
 
         If x > Index Then
             MessageBox.Show("Dieser MA existiert nicht", "Fehler 404", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            GoTo Restart
+            Close()
         End If
 
         For x = 0 To Index Step 1
